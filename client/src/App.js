@@ -15,7 +15,7 @@ const { api } = require("./constants");
 const providerOptions = {};
 
 const web3Modal = new Web3Modal({
-  network: 56,
+  network: 43114,
   cacheProvider: true,
   providerOptions,
 });

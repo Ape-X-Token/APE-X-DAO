@@ -8,7 +8,7 @@ const BLACKLISTED_ADDRESSES = config.get("blockchain.blacklisted");
 const DECIMALS = config.get("blockchain.apex.decimals");
 
 const APEX_PER_VOTE = BigNumber.from(1).mul(DECIMALS);
-const MIN_PROPOSAL_BALANCE = BigNumber.from(500000000).mul(DECIMALS); // 500,000,000 APE-X
+const MIN_PROPOSAL_BALANCE = BigNumber.from(10000000000).mul(DECIMALS); // 10,000,000,000 APE-X
 
 module.exports = {
   APEX_PER_VOTE,
