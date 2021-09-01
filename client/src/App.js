@@ -64,7 +64,7 @@ function App() {
     <div className="App">
       <ToastHub>
         <Container>
-          <div className="flex-center-items">
+          <div className="flex-center-items flex-column-reverse">
             <h1 className="header"><Logo height="50" />APE-X <span className="outlined">DAO</span></h1>
 
             <div>
@@ -85,7 +85,30 @@ function App() {
             </div>
           </div>
           {address != null ? (
-            <Proposals address={address}></Proposals>
+            <Fragment>
+              <div style={{ color: "var(--light)", marginBottom: "1em" }}>
+                <Typography variant="caption">
+                  <div style={{ marginBottom: "1em" }}>
+                    Welcome to the jungle! The minimum required APE-X to create a proposal is 5B. Anyone can vote on a created proposal 1 APE-X=1 VOTE. Proposals last for 7 days and will only be passed if 75% of Apes vote for. Please when creating proposals be as thorough as possible in the description, as well as including any budget requirements, resources needed to execute.
+                  </div>
+
+                  <div className="light">
+                    AVAX/APE-X DAO TREASURY:&nbsp;
+                    <a className="primary" href="https://cchain.explorer.avax.network/address/0xDEEdd1646984F9372Cc9D3d7E13AC1606cC2B548" rel="noreferrer" target="_blank">
+                      0xDEEdd1646984F9372Cc9D3d7E13AC1606cC2B548
+                    </a>
+                  </div>
+                  <div className="light">
+                    ETH/APE-X DAO TREASURY:&nbsp;
+                    <a className="primary" href="https://etherscan.io/address/0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552" rel="noreferrer" target="_blank">
+                      0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552
+                    </a>
+                  </div>
+                </Typography>
+              </div>
+
+              <Proposals address={address}></Proposals>
+            </Fragment>
           ) : (
             <Fragment>
               <Typography style={{ fontSize: "2em", textAlign: "center" }}>

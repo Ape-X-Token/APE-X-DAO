@@ -200,7 +200,7 @@ function Proposal({ address, proposal, refresh }) {
       </Snackbar>
 
 
-      <CardActions style={{ padding: "0" }}>
+      <CardActions className="dropdown" style={{ padding: "0" }}>
         <div className={clsx(classes.expand)}>
           <Typography variant="caption">
             View Voters ({proposal.voters.length})
@@ -218,7 +218,7 @@ function Proposal({ address, proposal, refresh }) {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse class="dropdown" in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent style={{ padding: "0px", textAlign: "left", maxHeight: "120px", overflowY: "auto" }}>
           <Typography variant="caption">
             {proposal.voters.length > 0 ?

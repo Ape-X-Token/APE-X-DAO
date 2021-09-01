@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const jwtauth = require('../middleware/jwtauth');
 const { isValidAddress } = require("../utils/blockchain");
 const accessTokenSecret = process.env.JWT_SECRET;
+const usersRepository = require("../repositories/users");
+const { sequelize } = require("../models");
 
 module.exports = (app, logger) => {
   app.get('/login', (req, res, next) => {
@@ -13,6 +15,15 @@ module.exports = (app, logger) => {
       next(createError(400, "Invalid address"));
       return;
     }
+    // const t = await sequelize.transaction();
+    // let user = await usersRepository.findByAddress(address, t, true);
+    // if (!user) {
+    //   console.log('create user');
+    //   user = await usersRepository.save({ address: address }, t);
+    // }
+    // await t.commit();
+    // console.log(user);
+
     var token = jwt.sign({ address: address }, accessTokenSecret);
     res.json({ token, address });
   });

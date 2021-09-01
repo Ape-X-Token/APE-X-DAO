@@ -54,6 +54,10 @@ code {
   background-color: var(--secondary);
 }
 
+.light {
+  color: var(--light);
+}
+
 .flex-center-items {
   display: flex;
   flex-direction: row;
@@ -66,6 +70,10 @@ code {
   .flex-center-items {
     text-align: center;
     flex-direction: column;
+  }
+
+  .flex-column-reverse {
+    flex-direction: column-reverse;
   }
 }
 
@@ -91,4 +99,8 @@ code {
 
 .Timer___StyledSpan3-sc-58hkwl-4 {
   color: var(--primary) !important;
+}
+
+.dropdown .MuiSvgIcon-root {
+  color: var(--primary);
 }

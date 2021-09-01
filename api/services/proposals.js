@@ -19,12 +19,24 @@ const findAllByPage = (page) => repository.findAllByPage(page);
 const save = async (proposal) => {
   const author = proposal.author;
   assertNotBlackListed(author);
-  const t = await sequelize.transaction();
+
+  let user;
+  let t = await sequelize.transaction();
   try {
-    let user = await usersRepository.findByAddress(author, t, true);
+    user = await usersRepository.findByAddress(author, t, true);
     if (!user) {
+      console.log('create user');
       user = await usersRepository.save({ address: author }, t);
     }
+    console.log(user);
+    await t.commit();
+  } catch (error) {
+    await t.rollback();
+    throw error;
+  }
+
+  t = await sequelize.transaction();
+  try {
     const canPropose = await user.canPropose();
     if (!canPropose) {
       throw createError(
@@ -34,6 +46,7 @@ const save = async (proposal) => {
         ).toString()} APE-X to create a proposal`
       );
     }
+    console.log(proposal);
     await repository.save(
       {
         title: proposal.title,
