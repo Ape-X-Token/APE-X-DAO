@@ -3,7 +3,6 @@ import { Divider } from '@material-ui/core';
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from '@material-ui/core/Collapse';
-import { red } from "@material-ui/core/colors";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   box: {
     borderRadius: "25px",
     textAlign: "center",
+    background: "var(--dark)",
+    color: "var(--light)",
+    border: "2px solid white",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -51,14 +53,10 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
   title: {
-    color: "#64618B",
+    color: "var(--primary)",
     fontWeight: "600",
     fontSize: "13pt",
-    textAlign: "center",
     margin: "auto",
     marginLeft: '0',
     marginTop: '0',
@@ -74,24 +72,22 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "3px",
     height: "20px",
     lineHeight: "20px",
-    background: "linear-gradient( 190deg, #BEA5A9 -100%, #faabbe 80%)"
+  },
+  voted: {
+    color: "var(--dark)",
+    background: "rgba(255,255,255, 0.2)",
   },
   inactive: {
-    marginLeft: "5px",
-    color: "white",
-    padding: "5px",
-    borderRadius: "3px",
-    height: "20px",
-    lineHeight: "20px",
-    background: "linear-gradient( 190deg, #BEA5A9 -100%, #ddc7cb 80%)",
+    color: "var(--dark)",
+    background: "rgba(255,255,255, 0.2)",
   },
   for: {
     color: "white",
-    background: "linear-gradient( 0deg, #E17992 -50%, #faabbe 140%)"
+    background: "var(--for)",
   },
   against: {
     color: "white",
-    background: "linear-gradient( 0deg, #425673 -80%, #667894 100%)"
+    background: "var(--against)",
   },
   cardContent: {
     backgroundSize: "50px 50px",
@@ -100,12 +96,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
   },
   content: {
-    color: "#64618B",
-    backgroundColor: "rgba(0,0,0,0)",
     border: 'none',
     margin: 'none',
     padding: 'none',
-    width: "100%", height: "100px", padding: '0px', overflowY: "auto", textAlign: "left", fontSize: "0.8em", lineHeight: "1.25em",
+    width: "100%", height: "100px", overflowY: "auto", textAlign: "left", fontSize: "0.8em", lineHeight: "1.25em",
   }
 }));
 
@@ -148,33 +142,35 @@ function Proposal({ address, proposal, refresh }) {
   return (
     <Box className={classes.box} heading={<Fragment>
       <div className={classes.title}>{proposal.title}</div>
-      <div style={{ whiteSpace: "nowrap", margin: "21px 0 21px 21px" }}><h6>
-        Status:
+      <div style={{ whiteSpace: "nowrap" }}>
+        <>
+          Status:
           {proposal.state === "PENDING" ?
-          <span className={classes.pending}>Pending</span>
-          :
-          <span className={clsx(classes.inactive, proposal.state === "ACCEPTED" ? classes.for : classes.against)}>{proposal.state}</span>
-        }
-      </h6></div>
+            <span className={classes.pending}>Pending</span>
+            :
+            <span className={clsx(classes.inactive, proposal.state === "ACCEPTED" ? classes.for : classes.against)}>{proposal.state}</span>
+          }
+        </>
+      </div>
     </Fragment>}>
 
       <CardContent className={proposal.state === "PENDING" ? classes.cardContent : null} style={{ padding: "0 0 1em 0" }}>
         {proposal.state === "PENDING" && (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <div style={{ flexBasis: '50%', color: "#64618B", fontSize: "7pt", alignContent: 'center', marginBottom: '2em' }}> <Timer style={{ margin: 'auto' }} end={new Date(proposal.expiration)} /></div>
+            <div style={{ flexBasis: '50%', fontSize: "7pt", alignContent: 'center', marginBottom: '2em' }}> <Timer theme={{ surfaceContent: "red" }} style={{ margin: 'auto' }} end={new Date(proposal.expiration)} /></div>
           </div>)
         }
         <div className={classes.content}>
-          <b>{proposal.title}</b><br />
+          <h4 style={{ lineHeight: "1.5em" }}>{proposal.title}</h4>
           {proposal.content}
         </div>
         <Distribution
           heading="Votes"
           items={[
-            { item: `${round(BigNumber.from(proposal.for) / 10e19, 2).toString()}T For`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.for) / totalVotes) * 100) : 0 },
-            { item: `${round(BigNumber.from(proposal.against) / 10e19, 2).toString()}T Against`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.against) / totalVotes) * 100) : 0 }
+            { item: `${round(BigNumber.from(proposal.for) / 10e16, 2).toString()}B For`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.for) / totalVotes) * 100) : 0 },
+            { item: `${round(BigNumber.from(proposal.against) / 10e16, 2).toString()}B Against`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.against) / totalVotes) * 100) : 0 }
           ]}
-          colors={["#E17992", "#425673"]}
+          colors={["var(--for)", "var(--against)"]}
         />
       </CardContent>
 
@@ -182,13 +178,13 @@ function Proposal({ address, proposal, refresh }) {
         (!proposal.voters.includes(address.toLowerCase()) ? (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <div style={{ flexBasis: '48%', margin: "1%" }}>
-              <Button className={clsx(classes.for)} size="mini" style={{ width: "100%", padding: "2px", margin: "2px" }} onClick={() => vote(true)}>For</Button></div>
+              <Button className={clsx(classes.for)} size="mini" style={{ width: "100%", padding: "2px", margin: "2px", border: "none" }} onClick={() => vote(true)}>For</Button></div>
             <div style={{ flexBasis: '48%', margin: "1%" }}>
-              <Button className={clsx(classes.against)} size="mini" style={{ width: "100%", padding: "2px", margin: "2px" }} onClick={() => vote(false)}>Against</Button>
+              <Button className={clsx(classes.against)} size="mini" style={{ width: "100%", padding: "2px", margin: "2px", border: "none" }} onClick={() => vote(false)}>Against</Button>
             </div>
           </div>
-        ) : <Button size="mini" style={{ width: "100%", padding: "2px", margin: "1.6%" }} disabled>Voted</Button>)
-        : <Button size="mini" style={{ width: "100%", padding: "2px", margin: "1.6%" }} disabled>Inactive</Button>
+        ) : <Button size="mini" className={classes.voted} style={{ width: "100%", padding: "2px", margin: "1.6%", border: "none" }} disabled>Voted</Button>)
+        : <Button size="mini" className={classes.inactive} style={{ width: "100%", padding: "2px", margin: "1.6%", border: "none" }} disabled>Inactive</Button>
       }
 
       <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={openSuccess} autoHideDuration={6000} onClose={handleCloseSuccess}>
@@ -222,7 +218,7 @@ function Proposal({ address, proposal, refresh }) {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse class="dropdown" in={expanded} timeout="auto" unmountOnExit>
         <CardContent style={{ padding: "0px", textAlign: "left", maxHeight: "120px", overflowY: "auto" }}>
           <Typography variant="caption">
             {proposal.voters.length > 0 ?

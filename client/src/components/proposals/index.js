@@ -1,11 +1,10 @@
-import { Button, TextInput, ContextMenu, ContextMenuItem } from '@aragon/ui';
-import { Backdrop, Typography, CircularProgress, Divider } from '@material-ui/core';
-import Hidden from '@material-ui/core/Hidden';
+import { Button, ContextMenu, ContextMenuItem, TextInput } from '@aragon/ui';
+import { Backdrop, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
 import Modal from '@material-ui/core/Modal';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +15,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { get, post } from "../../adapters/xhr";
 import "./index.css";
 import Proposal from "./proposal";
+
 
 const { api } = require("../../constants");
 
@@ -38,28 +38,30 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '25px'
   },
   paper: {
-    backgroundColor: theme.palette.background.paper,
+    border: "2px solid white",
+    backgroundColor: "var(--dark)",
+    color: "var(--primary)",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: 'none',
-    minWidth: '400px',
+    minWidth: '300px',
     borderRadius: '25px'
   },
-  gridList: {
-    width: 500,
-    height: 450,
-  },
-  create: {
-    color: "white",
-    background: "linear-gradient( 0deg, #BA6F9B -100%, #daa9c8 80%)",
-    outline: 'none',
-    // "#BA6F9B"
-    // b97ea1
-  },
-  header: {
-    color: "#64618B",
-    fontWeight: 700
-  },
+  //   gridList: {
+  //     width: 500,
+  //     height: 450,
+  //   },
+  //   create: {
+  //     color: "white",
+  //     background: "linear-gradient( 0deg, #BA6F9B -100%, #daa9c8 80%)",
+  //     outline: 'none',
+  //     // "#BA6F9B"
+  //     // b97ea1
+  //   },
+  //   header: {
+  //     color: "#64618B",
+  //     fontWeight: 700
+  //   },
 }));
 
 function Proposals({ address }) {
@@ -162,7 +164,7 @@ function Proposals({ address }) {
   const saveProposal = async (proposal) => {
     try {
       await post(`${api.proposals}`, proposal);
-      setStatusFilter('ACTIVE');
+      setStatusFilter('PENDING');
       setOpenSuccess(true)
     } catch (error) {
       setErr(error.message);
@@ -175,7 +177,7 @@ function Proposals({ address }) {
   return (
     <div className="Proposals" ref={componentRef}>
 
-      <Grid container justify="flex-end" alignItems="center">
+      <Grid container justifyContent="flex-end" alignItems="center">
         <Box style={{ 'marginLeft': '1em' }}>
           <NewProposalModal address={address} saveProposal={saveProposal} />
         </Box>
@@ -188,8 +190,7 @@ function Proposals({ address }) {
         </Box>
       </Grid>
 
-      <Divider style={{ 'margin': '1em 0' }}></Divider>
-      <Typography variant="h6" className={classes.header} style={{ textAlign: 'center', textTransform: 'capitalize' }}>
+      <Typography variant="h5" style={{ textAlign: 'center', textTransform: 'capitalize', margin: "1em 0" }}>
         {statusFilter.toLowerCase()} Proposals
       </Typography>
 
@@ -205,9 +206,9 @@ function Proposals({ address }) {
       // </Typography>
       // }
       >
-        <GridList cellHeight={"auto"} style={{ overflow: "hidden" }} cols={getGridListCols()}>
+        <ImageList rowHeight={"auto"} style={{ overflow: "hidden" }} cols={getGridListCols()}>
           {visibleProposals.map((proposal, index) => (
-            <GridListTile style={{ padding: "10px", overflow: "visible" }} key={index} cols={1}>
+            <ImageListItem style={{ padding: "10px", overflow: "visible" }} key={index} cols={1}>
               <Proposal
                 key={index}
                 address={address}
@@ -215,13 +216,13 @@ function Proposals({ address }) {
                 editing={false}
                 refresh={refreshData}
               />
-            </GridListTile>
+            </ImageListItem>
           ))}
-        </GridList>
+        </ImageList>
       </InfiniteScroll>
 
       {visibleProposals.length == 0 &&
-        <Typography style={{ color: "#64618B", margin: "1em 0", textAlign: "center" }} gutterBottom>
+        <Typography style={{ color: "#999", textAlign: "center" }} gutterBottom>
           No proposals.
         </Typography>
       }
@@ -266,7 +267,7 @@ function NewProposalModal({ address, saveProposal }) {
 
   return (
     <>
-      <Button className={classes.create} style={{ fontWeight: 800 }} onClick={open}>New Proposal</Button>
+      <Button className="button primary" onClick={open}>+ New Proposal</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -282,9 +283,9 @@ function NewProposalModal({ address, saveProposal }) {
         <Fade in={openModal}>
           <div className={classes.paper}>
             <div className="Proposals">
-              <Typography variant="h6" className={classes.header} gutterBottom>
+              <Typography variant="h6" className="classes.header" gutterBottom>
                 Create New Proposal:
-            </Typography>
+              </Typography>
               <div className="New-Proposal" noValidate autoComplete="off">
                 <TextInput
                   style={{ width: "95%", marginRight: "10px" }}
@@ -304,11 +305,10 @@ function NewProposalModal({ address, saveProposal }) {
                   onChange={(e) => {
                     handleChange("content", e);
                   }}
-                  multiline
                 />
                 <br />
                 <br />
-                <Button className={classes.create} onClick={() => { saveProposal(newProposal); close() }}>Create</Button>
+                <Button className="button" onClick={() => { saveProposal(newProposal); close() }}>Create</Button>
               </div>
             </div>
           </div>

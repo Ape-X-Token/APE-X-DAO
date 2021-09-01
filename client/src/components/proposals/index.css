@@ -1,19 +1,10 @@
-.Proposals {
-  /* text-align: center; */
+.button {
+    color: white !important;
+    background-color: black !important;
+    border: 2px solid white !important;
 }
 
-.Proposals-header {
-  /*background-color: #282c34;*/
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white; */
-}
-
-.New-Proposal {}
-
-.makeStyles-paper-2 {
-  /* min-width: 300px !important; */
+.button.primary {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
 }

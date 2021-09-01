@@ -161,9 +161,8 @@ Distribution.propTypes = {
 Distribution.defaultProps = {
   heading: null,
   itemTitle: ({ item, percentage, index }) => {
-    return `${
-      typeof item === 'string' ? item : `Item ${index + 1}`
-    }: ${percentage}%`
+    return `${typeof item === 'string' ? item : `Item ${index + 1}`
+      }: ${percentage}%`
   },
   renderLegendItem: ({ item, percentage, index }) => {
     return typeof item === 'string' ? item : `Item ${index + 1}`

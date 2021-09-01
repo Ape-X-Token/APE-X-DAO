@@ -1,13 +1,13 @@
-import { Button, Header, ToastHub } from '@aragon/ui';
+import { Button, ToastHub } from '@aragon/ui';
 import Container from '@material-ui/core/Container';
 import Typography from "@material-ui/core/Typography";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, View, useEffect, useState } from "react";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import { get } from './adapters/xhr';
-import "./App.css";
 import Address from "./components/address";
 import Proposals from "./components/proposals";
+import Logo from "./components/logo";
 
 const { api } = require("./constants");
 
@@ -64,34 +64,36 @@ function App() {
     <div className="App">
       <ToastHub>
         <Container>
-          <Header primary={
-            <Fragment>
-              <h1 style={{ color: "#7a5bd0", fontWeight: "800", fontSize: "24pt", textAlign: "center", margin: "auto", marginLeft: '0' }}>APE-X DAO</h1>
+          <div className="flex-center-items">
+            <h1 className="header"><Logo height="50" />APE-X <span className="outlined">DAO</span></h1>
 
-              <div style={{ marginLeft: 'auto', marginTop: "21px", marginBottom: "21px", color: "#64618B" }}>
-                {address == null ? (<Button
-                  // variant="outlined"
-                  // color="primary"
-                  onClick={async () => {
-                    getAccount(await web3Modal.connect());
-                  }}
-                >
-                  Connect wallet
-                </Button>
-                ) : (
-                  <h6 >
-                    Voting as <span style={{ color: "#7a5bd0" }}><Address address={address}></Address></span>
-                  </h6>
-                )}
-              </div>
-            </Fragment>
-          } />
+            <div>
+              {address == null ? (<Button
+                // variant="outlined"
+                // color="primary"
+                onClick={async () => {
+                  getAccount(await web3Modal.connect());
+                }}
+              >
+                Connect wallet
+              </Button>
+              ) : (
+                <h6 >
+                  Voting as <span className="primary"><Address address={address}></Address></span>
+                </h6>
+              )}
+            </div>
+          </div>
           {address != null ? (
             <Proposals address={address}></Proposals>
           ) : (
-            <Typography variant="caption" style={{ textAlign: "left", marginTop: "10em" }}>
-              Welcome to the Jungle! Please connect your wallet to join the APE-X DAO.
-            </Typography>
+            <Fragment>
+              <Typography style={{ fontSize: "2em", textAlign: "center" }}>
+                <Logo height="250" />
+                <br /><br />
+                Welcome to the Jungle! Please connect your wallet to join the APE-X DAO.
+              </Typography>
+            </Fragment>
           )}
         </Container>
       </ToastHub>
