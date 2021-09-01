@@ -39,10 +39,9 @@ const save = async (proposal) => {
     if (!canPropose) {
       throw createError(
         400,
-        `You should own at least ${MIN_PROPOSAL_BALANCE.div(
-          DECIMALS
-        ).toString()} APE-X to create a proposal`
+        `You should own at least ${MIN_PROPOSAL_BALANCE.div(10 ** DECIMALS).toString()} APE-X to create a proposal`
       );
+      return;
     }
     await repository.save(
       {

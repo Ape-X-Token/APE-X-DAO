@@ -89,7 +89,7 @@ function App() {
               <div style={{ color: "var(--light)", marginBottom: "1em" }}>
                 <Typography variant="caption">
                   <div style={{ marginBottom: "1em" }}>
-                    Welcome to the jungle! The minimum required APE-X to create a proposal is 5B. Anyone can vote on a created proposal 1 APE-X=1 VOTE. Proposals last for 7 days and will only be passed if 75% of Apes vote for. Please when creating proposals be as thorough as possible in the description, as well as including any budget requirements, resources needed to execute.
+                    Welcome to the jungle! The minimum required APE-X to create a proposal is 10B. Anyone can vote on a created proposal 1 APE-X=1 VOTE. Proposals last for 7 days and will only be passed if 75% of Apes vote for. Please when creating proposals be as thorough as possible in the description, as well as including any budget requirements, resources needed to execute.
                   </div>
 
                   <div className="light">

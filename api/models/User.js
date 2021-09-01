@@ -7,8 +7,8 @@ const { balanceOf } = require("../utils/blockchain");
 const BLACKLISTED_ADDRESSES = config.get("blockchain.blacklisted");
 const DECIMALS = config.get("blockchain.apex.decimals");
 
-const APEX_PER_VOTE = BigNumber.from(1).mul(DECIMALS);
-const MIN_PROPOSAL_BALANCE = BigNumber.from(10000000000).mul(DECIMALS); // 10,000,000,000 APE-X
+const APEX_PER_VOTE = BigNumber.from(10 ** DECIMALS);
+const MIN_PROPOSAL_BALANCE = BigNumber.from(10 * 10 ** 9).mul(10 ** DECIMALS); // 10,000,000,000 APE-X
 
 module.exports = {
   APEX_PER_VOTE,

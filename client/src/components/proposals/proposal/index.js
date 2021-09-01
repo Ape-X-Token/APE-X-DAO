@@ -167,8 +167,8 @@ function Proposal({ address, proposal, refresh }) {
         <Distribution
           heading="Votes"
           items={[
-            { item: `${round(BigNumber.from(proposal.for) / 10e16, 2).toString()}B For`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.for) / totalVotes) * 100) : 0 },
-            { item: `${round(BigNumber.from(proposal.against) / 10e16, 2).toString()}B Against`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.against) / totalVotes) * 100) : 0 }
+            { item: `${round(BigNumber.from(proposal.for) / 10e8, 2).toString()}B For`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.for) / totalVotes) * 100) : 0 },
+            { item: `${round(BigNumber.from(proposal.against) / 10e8, 2).toString()}B Against`, percentage: totalVotes > 0 ? round((BigNumber.from(proposal.against) / totalVotes) * 100) : 0 }
           ]}
           colors={["var(--for)", "var(--against)"]}
         />

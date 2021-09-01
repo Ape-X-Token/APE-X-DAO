@@ -10,7 +10,7 @@ const { assertNotBlackListed } = require("../utils/utils");
 const { BigNumber } = require("ethers");
 const DECIMALS = config.get("blockchain.apex.decimals");
 const { PROPOSAL_STATES } = require("../models/Proposal");
-const { NCAT_PER_VOTE } = require("../models/User");
+const { APEX_PER_VOTE } = require("../models/User");
 
 const vote = async (voter, proposalId, support) => {
   assertNotBlackListed(voter);
@@ -24,9 +24,7 @@ const vote = async (voter, proposalId, support) => {
     if (!canVote) {
       throw createError(
         400,
-        `You should own at least ${APEX_PER_VOTE.div(
-          DECIMALS
-        ).toString()} APEX to vote`
+        `You should own at least ${APEX_PER_VOTE.div(10 ** DECIMALS).toString()} APEX to vote`
       );
     }
     const userWeight = await user.getVotes();

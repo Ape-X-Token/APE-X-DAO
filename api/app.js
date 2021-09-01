@@ -23,7 +23,10 @@ const accessLogStream = rfs.createStream("access.log", {
 const app = express();
 const appPort = config.get("port");
 
-app.use(cors());
+// dont allow cors
+if (process.env.NODE_ENV == 'local') {
+  app.use(cors());
+}
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.json());
 app.use(cookieParser());
