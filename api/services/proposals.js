@@ -25,10 +25,8 @@ const save = async (proposal) => {
   try {
     user = await usersRepository.findByAddress(author, t, true);
     if (!user) {
-      console.log('create user');
       user = await usersRepository.save({ address: author }, t);
     }
-    console.log(user);
     await t.commit();
   } catch (error) {
     await t.rollback();
@@ -46,7 +44,6 @@ const save = async (proposal) => {
         ).toString()} APE-X to create a proposal`
       );
     }
-    console.log(proposal);
     await repository.save(
       {
         title: proposal.title,

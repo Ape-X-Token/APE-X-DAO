@@ -100,8 +100,8 @@ function App() {
                   </div>
                   <div className="light">
                     ETH/APE-X DAO TREASURY:&nbsp;
-                    <a className="primary" href="https://etherscan.io/address/0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552" rel="noreferrer" target="_blank">
-                      0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552
+                    <a className="primary" href="https://etherscan.io/address/0x69565fC78E3c684C31Db0B734aBFFeC4cd13C642" rel="noreferrer" target="_blank">
+                      0x69565fC78E3c684C31Db0B734aBFFeC4cd13C642
                     </a>
                   </div>
                 </Typography>
