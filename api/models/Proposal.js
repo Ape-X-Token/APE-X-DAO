@@ -15,8 +15,8 @@ const PROPOSAL_STATES = {
 
 const PROPOSAL_EXPIRATION_PERIOD = 1000 * 60 * 60 * 24 * 7; // 1 week
 const ZERO_BN = BigNumber.from(0);
-const REQUIRE_PERCENTAGE = BigNumber.from(66); // 66% needed to pass
-const REQUIRE_WEIGHT = BigNumber.from(100 * 10 ** 9); // 100B needed to pass
+const REQUIRE_PERCENTAGE = BigNumber.from(75); // 75% needed to pass
+const REQUIRE_WEIGHT = BigNumber.from(1000 * 10 ** 9); // 1T needed to pass
 
 module.exports = {
   PROPOSAL_STATES,
