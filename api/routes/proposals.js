@@ -52,10 +52,10 @@ router.post(
         content: req.body.content.trim(),
         target_fund: req.body.target_fund,
         require_fund: !!req.body.require_fund,
-        contact: req.body.contact?.trim(),
-        contact_type: req.body.contact_type?.trim(),
+        contact: req.body.contact.trim(),
+        contact_type: req.body.contact_type.trim(),
         has_expire: !!req.body.has_expire,
-        expire_date: req.body.expire_date?.trim(),
+        expire_date: req.body.expire_date.trim(),
       };
       await save(proposal);
       res.json({ message: "success", proposal });
