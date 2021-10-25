@@ -106,15 +106,15 @@ listeners.start((res) => {
 
       if (res.from.toUpperCase() == process.env.BLOCKCHAIN_LP_ADDRESS.toUpperCase()) {
         console.log('🟢', amount);
-        app.io.emit('message', '🟢' + shortaddress(res.to) + ' bought ' + numberformat(amount / 10 ** 6) + 'M APE-X');
+        app.io.emit('message', '🟢 ' + shortaddress(res.to) + ' bought ' + numberformat(amount / 10 ** 6) + 'M APE-X');
       }
       else if (res.to.toUpperCase() == process.env.BLOCKCHAIN_LP_ADDRESS.toUpperCase()) {
         console.log('🔴', amount);
-        app.io.emit('message', '🔴' + shortaddress(res.from) + ' sold ' + numberformat(amount / 10 ** 6) + 'M APE-X');
+        app.io.emit('message', '🔴 ' + shortaddress(res.from) + ' sold ' + numberformat(amount / 10 ** 6) + 'M APE-X');
       }
       else if (res.to.toUpperCase() == process.env.BLOCKCHAIN_BURN_ADDRESS.toUpperCase()) {
         console.log('🔥', amount);
-        app.io.emit('message', '🔥' + shortaddress(res.from) + ' burned ' + numberformat(amount / 10 ** 6) + 'M APE-X');
+        app.io.emit('message', '🔥 ' + shortaddress(res.from) + ' burned ' + numberformat(amount / 10 ** 6) + 'M APE-X');
       }
       break;
     default:
