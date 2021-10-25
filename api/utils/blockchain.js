@@ -4,13 +4,13 @@ const { Contract, utils, getDefaultProvider } = require("ethers");
 
 const config = require("config");
 
-const NCAT_ADDRESS = config.get("blockchain.apex.address");
-const NCAT_ABI = config.get("blockchain.apex.abi");
+const TOKEN_ADDRESS = config.get("blockchain.apex.address");
+const TOKEN_ABI = config.get("blockchain.apex.abi");
 const NETWORK = config.get("blockchain.network");
 
 const defaultProvider = getDefaultProvider(NETWORK);
 
-const roContract = new Contract(NCAT_ADDRESS, NCAT_ABI, defaultProvider);
+const roContract = new Contract(TOKEN_ADDRESS, TOKEN_ABI, defaultProvider);
 
 const isValidAddress = (addr) => {
   try {

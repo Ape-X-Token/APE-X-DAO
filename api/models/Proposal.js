@@ -1,19 +1,28 @@
 "use strict";
 const { Model, DataTypes } = require("sequelize");
 const { BigNumber } = require("ethers");
+const config = require("config");
+const DECIMALS = config.get("blockchain.apex.decimals");
 
 const PROPOSAL_STATES = {
-  PENDING: "PENDING",
-  ACCEPTED: "ACCEPTED",
-  REJECTED: "REJECTED",
+  VOTING: "Voting",
+  RESEARCH: "Research",
+  FUNDING: "Funding",
+  IMPLEMENTATION: "Implementation",
+  COMPLETED: "Completed",
+  REJECTED: "Rejected",
 };
 
 const PROPOSAL_EXPIRATION_PERIOD = 1000 * 60 * 60 * 24 * 7; // 1 week
 const ZERO_BN = BigNumber.from(0);
+const REQUIRE_PERCENTAGE = BigNumber.from(66); // 66% needed to pass
+const REQUIRE_WEIGHT = BigNumber.from(100 * 10 ** 9); // 100B needed to pass
 
 module.exports = {
   PROPOSAL_STATES,
   PROPOSAL_EXPIRATION_PERIOD,
+  REQUIRE_PERCENTAGE,
+  REQUIRE_WEIGHT,
   model: (sequelize) => {
     class Proposal extends Model { }
 
@@ -43,7 +52,7 @@ module.exports = {
         },
         state: {
           type: DataTypes.ENUM({ values: Object.values(PROPOSAL_STATES) }),
-          defaultValue: PROPOSAL_STATES.PENDING,
+          defaultValue: PROPOSAL_STATES.VOTING,
         },
         expiration: {
           type: DataTypes.DATE,
@@ -64,6 +73,25 @@ module.exports = {
           type: DataTypes.STRING,
           allowNull: false,
           defaultValue: ZERO_BN.toHexString(),
+        },
+
+        contact: { type: DataTypes.STRING, allowNull: true },
+        contact_type: { type: DataTypes.STRING, allowNull: true },
+
+        has_expire: { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false },
+        expire_date: { type: DataTypes.DATE, allowNull: true },
+
+        target_fund: { type: DataTypes.DOUBLE, allowNull: true, defaultValue: 0 },
+        require_fund: { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false },
+        raised_fund: { type: DataTypes.DOUBLE, allowNull: true, defaultValue: 0 },
+        funders: {
+          type: DataTypes.ARRAY(DataTypes.STRING),
+          defaultValue: [],
+        },
+        fund_wallet_address: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          defaultValue: () => process.env.FUNDING_WALLET
         },
       },
       { sequelize, modelName: "proposals" }

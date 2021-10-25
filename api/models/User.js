@@ -48,6 +48,10 @@ module.exports = {
           type: DataTypes.STRING,
           defaultValue: null,
         },
+        isAdmin: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        }
       },
       { sequelize, modelName: "users" }
     );

@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
     host: config.get("db.host"),
     dialect: config.get("db.dialect"),
     logging: config.get("db.logs"),
-    operatorsAliases: false,
+    // operatorsAliases: false,
     pool: {
       max: config.get("db.pool.max"),
       min: config.get("db.pool.min"),
@@ -25,9 +25,11 @@ const models = {
   sequelize,
 };
 
+
 // models
 models.users = require("./User.js").model(sequelize);
 models.proposals = require("./Proposal.js").model(sequelize);
 models.votes = require("./Vote.js").model(sequelize);
+models.funds = require("./Fund.js").model(sequelize);
 
 module.exports = models;
