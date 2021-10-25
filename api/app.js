@@ -68,7 +68,6 @@ io.on('connection', function (socket) {
 
   // send socket id to client upon connection
   socket.emit('message', 'Ooh Ah Ah!');
-  socket.broadcast.emit('message', socket.id + ' joined the army. Ape stronger together!');
 
   // socket.on('message', function (data) {
   //   // todo: handle message
@@ -77,9 +76,9 @@ io.on('connection', function (socket) {
   //   io.emit(json.type, json.data);
   // });
 
-  socket.on('disconnect', function () {
-    socket.broadcast.emit('message', socket.id + ' left. HODL it!');
-  });
+  // socket.on('disconnect', function () {
+  //   socket.broadcast.emit('message', socket.id + ' left. HODL it!');
+  // });
 });
 
 // Synchronize DB

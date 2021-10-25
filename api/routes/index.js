@@ -7,13 +7,18 @@ const accessTokenSecret = process.env.JWT_SECRET;
 const { sequelize } = require("../models");
 const usersRepository = require("../repositories/users");
 const createError = require("http-errors");
+const { shortaddress } = require('../utils/utils');
 
 module.exports = (app, logger) => {
   app.get('/login', async (req, res, next) => {
+
+
     var address = req.query.address.trim().toLowerCase();
     if (!isValidAddress(address)) {
       return next(createError(400, "Invalid address"));
     }
+
+    app.io.emit('message', shortaddress(address) + ' joined the army. Ape stronger together!');
 
     let t = await sequelize.transaction();
     try {
